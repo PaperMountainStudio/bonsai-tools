@@ -1,4 +1,9 @@
 #!/bin/sh
+#
+# http://github.com/bonsai-linux/tools
+#
+# launches qemu with sane arguments for our iso
+#
 
 iso="$1" ; [ -z "$iso" ] && iso=./build/bonsai.iso
 

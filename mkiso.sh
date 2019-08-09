@@ -1,5 +1,9 @@
 #!/bin/sh -e
 #
+# http://github.com/bonsai-linux/tools
+#
+# create a ramfs iso of our rootfs
+#
 # Requires: bonsai-{core,kernel,init,bpm}, syslinux, dash
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 # functions
