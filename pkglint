@@ -1,0 +1,64 @@
+#!/bin/sh
+template="$1"
+
+# from void's xtools - https://github.com/leahneukirchen/xtools
+file_end() {
+	if [ "$(tail -c 1 $template)" ]; then
+		echo "$template:$(( $(wc -l < $template) + 1 )): File does not end with newline character"
+	elif [ -z "$(tail -c 2 $template)" ]; then
+		echo "$template:$(wc -l < $template): Last line is empty"
+	fi
+}
+
+trailing_spaces() {
+	grep -q ' $' < "$template" && echo 'trailing whitespace detected'
+}
+
+tabs() {
+	grep -qP '\t' < "$template" && echo "$template contains tabs, change them to spaces\nexample:\n    expand -t 4 $template > $template.tmp && mv $template.tmp $template"
+}
+
+permission() {
+	! [ $(stat -c '%a' "$template") = "644" ] && echo "wrong permission\n example fix:\n    chmod 644 $template"
+}
+
+quotes() {
+	grep -q '^info="' < "$template" && echo 'single quotes recommended in info'
+
+	grep -q "^sha512='" < "$template" && echo "sha512 doesn't have to be quoted"
+	grep -q '^sha512="' < "$template" && echo "sha512 doesn't have to be quoted"
+
+	grep -q "^sha256='" < "$template" && echo "sha256 doesn't have to be quoted"
+	grep -q '^sha256="' < "$template" && echo "sha256 doesn't have to be quoted"
+
+	grep -q "^sha1='" < "$template" && echo "sha1 doesn't have to be quoted"
+	grep -q '^sha1="' < "$template" && echo "sha1 doesn't have to be quoted"
+
+	grep -q "^md5='" < "$template" && echo "md5 doesn't have to be quoted"
+	grep -q '^md5="' < "$template" && echo "md5 doesn't have to be quoted"
+
+	# bug: if there is a space after  
+	deps=$(grep "^deps=" < "$template" | cut -d'=' -f2- | sed -e 's/^[ \t]*//')
+	isdepsquoted=false
+	grep -q "^deps='" < "$template" && isdepsquoted=true
+	grep -q '^deps="' < "$template" && isdepsquoted=true
+
+	case "$deps" in
+		*\ *)
+			! "$isdepsquoted" && echo "variable deps should be quoted"
+			;;
+		*)
+			"$isdepsquoted" && echo "variable deps doesn't have to be quoted"
+	esac
+}
+
+check_shell_syntax() {
+	dash -n "$template"
+}
+
+file_end
+trailing_spaces
+tabs
+permission
+quotes
+check_shell_syntax
