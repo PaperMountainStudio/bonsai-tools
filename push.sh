@@ -5,9 +5,14 @@
 # syncs build-server repo to local repo
 #
 
+# I keep different branches as different folders
+# by default, use 'bonsai-master'.
+# If arg provided, use 'bonsai-$arg'.
+[ "$1" ] || set -- master
+src=${HOME}/src/bonsai-$1
+
 vps=vps
-src=${HOME}/src/bonsai
 bonsai=bonsai
 
-rsync -rtvuh4c --progress --delete $src/ $vps:$bonsai
-ssh $vps "cd $bonsai ; make clean ; make ; make install"
+rsync -rtvuh4c --delete $src/ $vps:$bonsai
+ssh $vps "cd $bonsai ; make clean ; make ; make install ; ./bonsai skel"
