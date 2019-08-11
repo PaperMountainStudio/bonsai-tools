@@ -4,7 +4,7 @@
 #
 # create a ramfs iso of our rootfs
 #
-# Requires: bonsai-{core,kernel,init,bpm}, syslinux, dash
+# Requires: bonsai-{core,kernel,init,bpm}, syslinux
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 # functions
 msg() { printf "%s\n" "→ $*" ; }
@@ -24,14 +24,14 @@ find . | cpio -R root:root -H newc -o | gzip > "$builddir"/rootfs.gz
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 msg 'copying kernel image...'
 cd "$builddir"
-cp -f "$root"/src/pkgs/bonsai-kernel/vmlinuz ./kernel.gz
+cp -f "$root"/src/pkgs/bonsai-kernel/vmlinuz ./vmlinuz
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 msg 'copying bootloader...'
 cp -f "$root"/src/pkgs/syslinux/isolinux.bin ./isolinux.bin
 cp -f "$root"/src/pkgs/syslinux/ldlinux.c32  ./ldlinux.c32
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 msg 'creating syslinux config...'
-echo 'default kernel.gz initrd=rootfs.gz' > isolinux.cfg
+echo 'default vmlinuz initrd=rootfs.gz' > isolinux.cfg
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 msg 'creating iso...'
 xorriso \
