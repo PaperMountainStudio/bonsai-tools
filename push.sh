@@ -15,4 +15,4 @@ vps=vps
 bonsai=bonsai
 
 rsync -rtvuh4c --delete $src/ $vps:$bonsai
-ssh $vps "cd $bonsai ; make clean ; make ; make install ; ./bonsai skel"
+ssh $vps "cd $bonsai ; make clean ; make ; make install"
