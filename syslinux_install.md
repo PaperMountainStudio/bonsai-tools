@@ -37,7 +37,7 @@
     EOF
     ```
     
-    change PROMPT to 0 and TIMEOUT to 50 for a prompt
+    NOTE: THESE ARE TABS NOT SPACES!
 
 6. make sure ext4 filesytem uses 32 bit sizes, (64 incompatible with `syslinux`)
 
