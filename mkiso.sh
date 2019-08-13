@@ -23,9 +23,12 @@ msg 'zipping up the root file system...'
 cd "$root"
 find . | cpio -R root:root -H newc -o | gzip > "$builddir"/rootfs.gz
 
-msg 'copying kernel image...'
 cd "$builddir"
-cp -f "$root"/src/pkgs/bonsai-kernel/vmlinuz ./vmlinuz
+
+msg 'copying kernel files...'
+cp -f "$root"/boot/vmlinuz ./vmlinuz
+cp -f "$root"/boot/System.map ./System.map
+cp -f "$root"/boot/config ./config
 
 msg 'copying bootloader...'
 cp -f "$root"/src/pkgs/syslinux/isolinux.bin ./isolinux.bin
