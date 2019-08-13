@@ -31,8 +31,8 @@ cp -f "$root"/boot/System.map ./System.map
 cp -f "$root"/boot/config ./config
 
 msg 'copying bootloader...'
-cp -f "$root"/src/pkgs/syslinux/isolinux.bin ./isolinux.bin
-cp -f "$root"/src/pkgs/syslinux/ldlinux.c32  ./ldlinux.c32
+cp -f "$root"/src/pkgs/syslinux/share/syslinux/isolinux.bin ./isolinux.bin
+cp -f "$root"/src/pkgs/syslinux/share/syslinux/ldlinux.c32  ./ldlinux.c32
 
 msg 'creating syslinux config...'
 echo 'default vmlinuz initrd=rootfs.gz' > isolinux.cfg
