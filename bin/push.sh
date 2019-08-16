@@ -5,11 +5,8 @@
 # syncs build-server repo to local repo
 #
 
-# I keep different branches as different folders
-# by default, use 'bonsai-master'.
-# If arg provided, use 'bonsai-$arg'.
-[ "$1" ] || set -- master
-src=${HOME}/src/bonsai-$1
+[ "$1" ] || set -- -$1
+src=${HOME}/src/bonsai
 
 vps=vps
 bonsai=bonsai
