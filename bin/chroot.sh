@@ -34,11 +34,14 @@ if [ $(id -u) -ne 0 ] ; then
     exit $?
 fi
 
-echo "mounting proc,dev,sys..."
+echo 'mounting proc,dev,sys...'
 mount -o bind -t devtmpfs /dev     "$path"/dev     2>/dev/null
 mount -o bind -t devpts   /dev/pts "$path"/dev/pts 2>/dev/null
 mount -o bind -t proc     /proc    "$path"/proc    2>/dev/null
 mount -o bind -t sysfs    /sys     "$path"/sys     2>/dev/null
+
+echo 'copying /etc/resolv.conf'
+cp -f /etc/resolv.conf "$path"/etc
 
 chroot "$path" /bin/sh
 
