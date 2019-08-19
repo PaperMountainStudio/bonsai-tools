@@ -59,8 +59,18 @@ cp -f /etc/resolv.conf "$path"/etc
 OLD_PS1="$PS1"
 export PS1='% '
 
-# unset root= here for the chroot environment
-root= chroot "$path" /bin/sh
+# prefer a nice interactive shell if one is installed in the chroot
+for shell in loksh mksh bash zsh dash sh ; do
+    [ -L "$path"/bin/$shell ] && break
+done
+
+# set up some env variables for the chroot
+# notice we unset $root if it exists in the env
+root= \
+USER=root \
+HOME=/root \
+SHELL=$shell \
+chroot "$path" /bin/$shell
 
 tryumount() {
     if ! umount "$1" 2>/dev/null ; then
