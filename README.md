@@ -29,11 +29,15 @@ export root=/path/to/chroot
 
 ## 3. `mkiso.sh`
 
-Assuming you have the required programs installed 
-in your chroot, this will zip up your rootfs and make it
-into a bootable initrd `.iso` for use with `qemu`.
+Assuming you have the required packages installed in your chroot: `@core`, `@init`, `kernel`, `syslinux`
+
+```bash
+./mkiso.sh /path/to/chroot
+```
+*(alternatively it can read from `$root` in environment)*
+
+This will zip up your rootfs and make it into a bootable initrd `.iso` for use with `qemu`.
 
 ## 4. `qemu.sh`
 
-This will launch `qemu` with sane arguments to boot a `.iso` 
-that you created with the script above.
+This will launch `qemu` to boot a `.iso` that you created with `mkiso.sh`.

@@ -7,14 +7,28 @@
 # Requires: bonsai-{core,kernel,init}, syslinux
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
+case "$1" in
+    -h|*help)
+        >&2 echo 'usage: ./mkiso.sh /path/to/chroot'
+        exit
+esac
+
+# -*-*- CONFIG *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+builddir="$PWD"/build # where we should output to
+# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+if [ "$1" ] ; then
+    root="$1"
+elif [ -z "$root" ] ; then
+    >&2 echo "No root provided."
+    exit 1
+fi
+
 msg() { printf "%s\n" "→ $*" ; }
 
-# -*-*- config -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-root=~/.local/bonsai
-builddir="$PWD"/build
 bonsai=$root/src/bonsai
+
 rm -r "${builddir:?}" 2>/dev/null ||: ; mkdir -p "$builddir"
-# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 msg 'relinking world...'
 $bonsai --relink-world --chroot
