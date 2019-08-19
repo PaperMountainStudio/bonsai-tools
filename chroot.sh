@@ -79,10 +79,8 @@ tryumount() {
     if ! umount "$1" 2>/dev/null ; then
         sleep 1
         if ! umount -f "$1" 2>/dev/null ; then
-            sleep 1
-            if ! umount -l "$1" 2>/dev/null ; then
-                >&2 echo "WARNING: could  not umount -l $1!"
-            fi
+            umount -l "$1" 2>/dev/null
+            >&2 echo "WARNING: could  not umount $1!"
         fi
     fi
 }
