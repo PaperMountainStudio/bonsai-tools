@@ -39,7 +39,7 @@ fi
 
 # if not running as root, restart script
 if [ $(id -u) -ne 0 ] ; then
-    if type doas > /dev/null ; then
+    if type doas >/dev/null 2>&1 ; then
         doas "$0" "$@"
     else
         sudo -E "$0" "$@"
