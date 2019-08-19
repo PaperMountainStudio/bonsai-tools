@@ -46,7 +46,8 @@ cp -f /etc/resolv.conf "$path"/etc
 OLD_PS1="$PS1"
 export PS1='% '
 
-chroot "$path" /bin/sh
+# unset root= here for the chroot environment
+root= chroot "$path" /bin/sh
 
 tryumount() {
     if ! umount "$1" 2>/dev/null ; then
