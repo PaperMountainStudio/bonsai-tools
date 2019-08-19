@@ -43,6 +43,9 @@ mount -o bind -t sysfs    /sys     "$path"/sys     2>/dev/null
 echo 'copying /etc/resolv.conf'
 cp -f /etc/resolv.conf "$path"/etc
 
+OLD_PS1="$PS1"
+export PS1='% '
+
 chroot "$path" /bin/sh
 
 tryumount() {
@@ -62,5 +65,7 @@ sleep 1
 tryumount "$path"/dev
 tryumount "$path"/proc
 tryumount "$path"/sys
+
+export PS1="$OLD_PS1"
 
 echo "Exited chroot!"
