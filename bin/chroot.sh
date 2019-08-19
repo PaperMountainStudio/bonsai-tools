@@ -5,7 +5,20 @@
 # enter a bonsai chroot
 #
 
-path="$1"
+case "$1" in
+    -h|*help)
+        printf "%s\n\n%s\n\n%s\n" \
+            'usage: ./chroot.sh /path/to/chroot' \
+            'OR' \
+            'with no arguments, using $root variable from environment'
+        exit
+esac
+
+if [ "$1" ] ; then
+    path="$1"
+elif [ "$root" ] ; then
+    path="$root"
+fi
 
 # sanity checks
 if [ ! -d "$path" ] ; then
