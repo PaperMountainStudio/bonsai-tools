@@ -56,6 +56,9 @@ mount -o bind -t sysfs    /sys     "$path"/sys     2>/dev/null
 echo 'copying /etc/resolv.conf'
 cp -f /etc/resolv.conf "$path"/etc
 
+# linebreak before entering chroot
+echo
+
 OLD_PS1="$PS1"
 export PS1='% '
 
@@ -84,7 +87,7 @@ tryumount() {
     fi
 }
 
-echo "unmounting proc,dev,sys..."
+printf "\n%s\n" "unmounting proc,dev,sys..."
 sleep 1
 tryumount "$path"/dev
 tryumount "$path"/proc
