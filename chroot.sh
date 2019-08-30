@@ -39,10 +39,14 @@ fi
 
 # if not running as root, restart script
 if [ $(id -u) -ne 0 ] ; then
-    if type doas >/dev/null 2>&1 ; then
-        doas "$0" "$@"
-    else
+    if type sudo >/dev/null 2>&1 ; then
         sudo -E "$0" "$@"
+    else
+        >&2 echo "Uh oh... doas hasn't been tested yet..."
+        >&2 echo "If you get it working, please pull request! ~ mitch"
+        # doas does not preserve the environment, (sudo's -E flag)
+        # we need to preserve in order to keep the exported $root variable
+        # doas "$0" "$@"
     fi
     exit $?
 fi
