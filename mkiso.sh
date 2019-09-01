@@ -4,7 +4,7 @@
 #
 # create a ramfs iso of our rootfs
 #
-# Requires: bonsai-{core,kernel,init}, syslinux
+# Requires: kernel, syslinux
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 case "$1" in
