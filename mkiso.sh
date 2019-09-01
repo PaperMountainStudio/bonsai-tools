@@ -4,7 +4,7 @@
 #
 # create a ramfs iso of our rootfs
 #
-# Requires: kernel, syslinux
+# Requires: @stage0, @stage1, @init, kernel, syslinux
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 case "$1" in
